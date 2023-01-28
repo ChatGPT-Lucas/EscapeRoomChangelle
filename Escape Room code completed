@@ -1,0 +1,53 @@
+# representação do tabuleiro
+board = {
+    "cozinha": {"puzzle": "código de senha", "pista": "procure na geladeira", "solucao": "1234"},
+    "sala de estar": {"puzzle": "engrenagens", "pista": "a sala tem 4 janelas", "solucao": "girar engrenagens 1, 3 e 4"},
+    "quarto": {"puzzle": "cadeado", "pista": "procure debaixo da cama", "solucao": "chave vermelha"}
+}
+
+# itens do jogador
+itens = []
+
+# tempo restante
+tempo_restante = 60
+
+# função para imprimir o tabuleiro
+def print_board():
+    for area, puzzles in board.items():
+        print(area)
+        print("Puzzle: ", puzzles["puzzle"])
+        print("Pista: ", puzzles["pista"])
+        print("\n")
+
+# função para mover jogador para uma área
+def move(area):
+    if area in board:
+        print("Você está na área da", area)
+        print("Puzzle: ", board[area]["puzzle"])
+        print("Pista: ", board[area]["pista"])
+    else:
+        print("Área inválida")
+
+# função para tentar resolver um quebra-cabeça
+def solve(area, solution):
+    if board[area]["solucao"] == solution:
+        print("Parabéns, você resolveu o quebra-cabeça!")
+        del board[area] # remove quebra-cabeça resolvido
+    else:
+        print("Resposta incorreta, tente novamente")
+
+# início do jogo
+print_board()
+
+while len(board) > 0 and tempo_restante > 0:
+    area = input("Em qual área você deseja ir? ")
+    move(area)
+    solution = input("Qual é a sua solução para o quebra-cabeça? ")
+    solve(area, solution)
+    tempo_restante -= 1
+    print("Tempo restante: ", tempo_restante)
+
+if len(board) == 0:
+    print("Parabéns, você escapou do quarto!")
+else:
+    print("Tempo esgotado, você não conseguiu escapar.")
